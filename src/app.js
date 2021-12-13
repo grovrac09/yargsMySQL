@@ -20,7 +20,7 @@ const app = async (args) => {
             updateBands();
         break;
         case "addAlbum":
-            addAlbum({albumTitle: args.albumTitle, tracks: args.tracks, releaseDate: args.releaseDate});
+            addAlbum({albumId: args.albumId, bandId: args.bandId, albumTitle: args.albumTitle, tracks: args.tracks, releaseDate: args.releaseDate});
         break;
         case "listAlbum":
             listAlbum();

@@ -4,6 +4,7 @@ exports.addAlbum = async (albumObj) => {
     try {
         await Album.sync()
         await Album.create(albumObj)
+        console.log(albumObj)
         return `Successfully created ${albumObj.albumTitle}.`
     } catch (error) {
         console.log(error)

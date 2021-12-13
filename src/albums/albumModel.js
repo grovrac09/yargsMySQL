@@ -3,17 +3,17 @@ const {DataTypes} = require("sequelize");
 const {Bands} = require("../bands/bandModel");
 
 const Album = sequelize.define("Album", {
+    albumId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     bandId: {
         type: DataTypes.INTEGER,
         references: {
             model: Bands,
             key: "bandId"
         }
-    },
-    albumId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
     },
     albumTitle: {
         type: DataTypes.STRING,
