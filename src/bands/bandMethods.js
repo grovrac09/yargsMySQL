@@ -1,10 +1,9 @@
-const Bands = require("./bandModel");
+const Band = require("./bandModel");
 
 exports.addBands = async (bandsObj) => {
     try {
-        await Bands.sync()
-        await Bands.create(bandsObj)
-        console.log(`Successfully created ${bandsObj.bandName}.`)
+        const band = await Band.create(bandsObj)
+        console.log(`Successfully created ${band.name} with ID ${band.id}.`)
     } catch (error) {
         console.log(error)
     }
@@ -12,7 +11,9 @@ exports.addBands = async (bandsObj) => {
 
 exports.listBands = async () => {
     try {
-        console.log(await Bands.findAll({}))
+        for (let band of await Band.findAll({})) {
+            console.log(band.name)
+        }
     } catch (error) {
         console.log(error)
     }
@@ -20,25 +21,28 @@ exports.listBands = async () => {
 
 exports.updateBands = async (bandsObj) => {
     try {
-        await Bands.update({ memberCount: "unknown" }, {
-            where: {
-              memberCount: null
-            }
-        });
-             `Successfully updated ${bandsObj.memberCount}.`
-        } catch (error) {
-        console.log(error)
-    } 
-};
-
-exports.deleteBands = async () => {
-    try {
-        await Bands.destroy({
-            where: {
-              bandName: "One Direction"
-            }
-          })
+        await Band.update({ comment: "test" },
+            {
+                where: {
+                    comment: null
+                }
+            });
+        console.log(`Successfully updated ${bandsObj.comment}.`)
     } catch (error) {
         console.log(error)
     }
 };
+
+exports.deleteBands = async () => {
+    try {
+        await Band.destroy({
+            where: {
+                name: "Rammstein"
+            }
+        })
+        console.log(`Successfully deleted item(s).`)
+    } catch (error) {
+        console.log(error)
+    }
+};
+

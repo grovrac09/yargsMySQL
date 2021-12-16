@@ -1,16 +1,14 @@
 const sequelize = require("../db/connection");
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
+const Album = require("../albums/albumModel");
+const Member = require("../members/memberModel");
 
-const Bands = sequelize.define("Bands", {
-    bandId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    bandName: {
+
+const Band = sequelize.define("Band", {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
-    }, 
+    },
     memberCount: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -22,10 +20,16 @@ const Bands = sequelize.define("Bands", {
     country: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    comment: {
+        type: DataTypes.STRING,
     }
 });
 
-module.exports = Bands;
+Band.hasMany(Member);
+Band.hasMany(Album);
+
+module.exports = Band;
 
 
 

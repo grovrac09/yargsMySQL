@@ -1,10 +1,11 @@
-const Members = require("./memberModel");
+const Member = require("./memberModel");
+const Band = require("../bands/bandModel");
 
 exports.addMembers = async (memberObj) => {
     try {
-        await Members.sync()
-        await Members.create(memberObj)
-        return `Successfully created ${memberObj.memberName}.`
+        const member = await Member.build(memberObj)
+        member.save()
+        console.log(`Successfully created ${member.name}.`)
     } catch (error) {
         console.log(error)
     }
@@ -12,7 +13,9 @@ exports.addMembers = async (memberObj) => {
 
 exports.listMembers = async () => {
     try {
-        console.log(await Members.findAll({}))
+        for (let member of await Member.findAll({})) {
+            console.log(member.name)
+        }
     } catch (error) {
         console.log(error)
     }
@@ -20,24 +23,24 @@ exports.listMembers = async () => {
 
 exports.updateMembers = async (memberObj) => {
     try {
-        await Members.update({bandRole: "unknown"}, {
+        await Member.update({ role: "unknown" }, {
             where: {
-                bandRole: null
+                role: null
             }
         });
-             `Successfully updated ${memberObj.bandRole}.`
-        } catch (error) {
+        `Successfully updated ${memberObj.role} on ${memberObj.name}.`
+    } catch (error) {
         console.log(error)
-    } 
+    }
 };
 
 exports.deleteMembers = async () => {
     try {
-        await Members.destroy({
+        await Member.destroy({
             where: {
-              bandRole: "backup vocalist"
+                bandRole: "backup vocalist"
             }
-          })
+        })
     } catch (error) {
         console.log(error)
     }
